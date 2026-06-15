@@ -1,0 +1,28 @@
+[12-Jun-2026 11:40:07 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'YOUR_DB_BINADATA'@'localhost' (using password: YES) in /home/leocomp1/binaenterprises.co.in/service.php:5
+Stack trace:
+#0 /home/leocomp1/binaenterprises.co.in/service.php(5): mysqli->__construct()
+#1 {main}
+  thrown in /home/leocomp1/binaenterprises.co.in/service.php on line 5
+[12-Jun-2026 11:41:06 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'BINADATA'@'localhost' (using password: YES) in /home/leocomp1/binaenterprises.co.in/service.php:5
+Stack trace:
+#0 /home/leocomp1/binaenterprises.co.in/service.php(5): mysqli->__construct()
+#1 {main}
+  thrown in /home/leocomp1/binaenterprises.co.in/service.php on line 5
+[12-Jun-2026 11:41:14 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'BINADATA'@'localhost' (using password: YES) in /home/leocomp1/binaenterprises.co.in/service.php:5
+Stack trace:
+#0 /home/leocomp1/binaenterprises.co.in/service.php(5): mysqli->__construct()
+#1 {main}
+  thrown in /home/leocomp1/binaenterprises.co.in/service.php on line 5
+[12-Jun-2026 11:42:02 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'leocomp1_BINADATA'@'localhost' (using password: YES) in /home/leocomp1/binaenterprises.co.in/service.php:5
+Stack trace:
+#0 /home/leocomp1/binaenterprises.co.in/service.php(5): mysqli->__construct()
+#1 {main}
+  thrown in /home/leocomp1/binaenterprises.co.in/service.php on line 5
+[12-Jun-2026 13:25:26 UTC] PHP Warning:  Undefined variable $name in /home/leocomp1/binaenterprises.co.in/service.php on line 20
+[12-Jun-2026 13:25:26 UTC] PHP Warning:  Undefined variable $mobile in /home/leocomp1/binaenterprises.co.in/service.php on line 22
+[12-Jun-2026 13:25:26 UTC] PHP Warning:  Undefined variable $service in /home/leocomp1/binaenterprises.co.in/service.php on line 24
+[12-Jun-2026 13:25:26 UTC] Mail Sent
+[12-Jun-2026 13:30:12 UTC] Mail Sent
+[12-Jun-2026 13:30:46 UTC] Mail Sent
+[12-Jun-2026 13:31:09 UTC] Mail Sent
+[13-Jun-2026 05:24:16 UTC] Mail Sent

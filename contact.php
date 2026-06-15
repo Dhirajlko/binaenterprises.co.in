@@ -1,0 +1,579 @@
+<?php
+// Form handling for contact page
+$form_success = false;
+$form_error = false;
+$msg = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_contact'])) {
+    $name = trim($_POST['name'] ?? '');
+    $mobile = trim($_POST['mobile'] ?? '');
+    $service = trim($_POST['service'] ?? '');
+    $message = trim($_POST['message'] ?? '');
+    
+    if (empty($name) || empty($mobile) || empty($service)) {
+        $form_error = true;
+        $msg = '❌ कृपया नाम, मोबाइल और सेवा चुनें।';
+    } elseif (!preg_match('/^[6-9]\d{9}$/', $mobile)) {
+        $form_error = true;
+        $msg = '❌ सही 10 अंकों का मोबाइल नंबर दर्ज करें।';
+    } else {
+        $form_success = true;
+        $msg = '✅ धन्यवाद! हम 24 घंटे में आपसे संपर्क करेंगे।';
+        // Optional: Send email or save to database
+        $_POST = [];
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>संपर्क करें | Bina Enterprises – 3D Online Form Filling & CSC Services</title>
+    <meta name="description" content="Bina Enterprises से संपर्क करें – सभी ऑनलाइन फॉर्म, सरकारी योजनाएँ, बीमा, CSC सेवाओं के लिए संपर्क करें।">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0a0f1e 0%, #030613 100%);
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f97316;
+            border-radius: 10px;
+        }
+
+        /* Animated Gradient Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(125deg, #0f172a 0%, #020617 40%, #000000 100%);
+            background-size: 200% 200%;
+            animation: bgWave 12s ease infinite;
+        }
+        @keyframes bgWave {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Shapes (Glowing Orbs) */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .shape {
+            position: absolute;
+            background: radial-gradient(circle, rgba(249,115,22,0.15), rgba(250,204,21,0.05));
+            backdrop-filter: blur(8px);
+            border-radius: 50%;
+            animation: float 25s infinite ease-in-out;
+            pointer-events: none;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.3; }
+            50% { transform: translate(40px, -40px) rotate(10deg) scale(1.2); opacity: 0.6; }
+            100% { transform: translate(-20px, 20px) rotate(-5deg) scale(0.9); opacity: 0.3; }
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Glassmorphic Navbar */
+        .navbar {
+            backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.65);
+            border-radius: 80px;
+            margin: 25px auto 35px;
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        .navbar:hover {
+            border-color: rgba(249,115,22,0.5);
+            box-shadow: 0 12px 40px rgba(249,115,22,0.2);
+        }
+        .logo h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #f97316);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .logo p {
+            font-size: 0.7rem;
+            color: #cbd5e6;
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #f1f5f9;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f97316, #facc15);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a:hover {
+            color: #f97316;
+        }
+
+        /* Premium 3D Buttons */
+        .btn-3d {
+            background: linear-gradient(95deg, #f97316, #ea580c);
+            border: none;
+            padding: 10px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 5px 15px rgba(249,115,22,0.4);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: inline-block;
+            text-decoration: none;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+        }
+        .btn-3d:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(249,115,22,0.6);
+            background: linear-gradient(95deg, #ff841f, #f96510);
+        }
+        .btn-3d:active {
+            transform: translateY(2px);
+        }
+
+        /* Page Hero */
+        .page-hero {
+            text-align: center;
+            padding: 40px 0 30px;
+        }
+        .page-hero h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, #f97316, #facc15);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+        .page-hero p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 1rem auto;
+        }
+
+        /* Contact Main Grid */
+        .contact-main-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+        .contact-details {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border-radius: 56px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s;
+        }
+        .contact-details:hover {
+            border-color: rgba(249,115,22,0.5);
+            box-shadow: 0 10px 30px rgba(249,115,22,0.1);
+        }
+        .contact-details h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(120deg, #fff, #facc15);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+            transition: transform 0.3s ease, background 0.3s;
+            padding: 8px 12px;
+            border-radius: 40px;
+        }
+        .detail-item:hover {
+            transform: translateX(8px);
+            background: rgba(249,115,22,0.1);
+        }
+        .detail-item i {
+            font-size: 1.6rem;
+            color: #f97316;
+            width: 40px;
+            text-align: center;
+        }
+        .detail-item p, .detail-item a {
+            line-height: 1.4;
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .detail-item a:hover {
+            color: #f97316;
+            text-decoration: underline;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.08);
+            padding: 10px 20px;
+            border-radius: 60px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .social-links a:hover {
+            background: #f97316;
+            transform: translateY(-3px);
+            border-color: #f97316;
+        }
+
+        /* Contact Form Box */
+        .contact-form-box {
+            flex: 1;
+            background: rgba(20, 30, 55, 0.55);
+            backdrop-filter: blur(20px);
+            border-radius: 56px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s;
+        }
+        .contact-form-box:hover {
+            border-color: rgba(249,115,22,0.5);
+            box-shadow: 0 10px 30px rgba(249,115,22,0.1);
+        }
+        .contact-form-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(120deg, #fff, #facc15);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 60px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #f97316;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.2);
+        }
+        .form-group textarea {
+            border-radius: 32px;
+            min-height: 100px;
+            resize: vertical;
+        }
+        select option {
+            background: #1e293b;
+            color: white;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 14px 20px;
+            border-radius: 60px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            animation: slideIn 0.5s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .alert-success {
+            background: linear-gradient(95deg, #15803d, #166534);
+            border-left: 4px solid #4ade80;
+        }
+        .alert-error {
+            background: linear-gradient(95deg, #b91c1c, #991b1b);
+            border-left: 4px solid #f87171;
+        }
+
+        /* Map Section */
+        .map-section {
+            margin: 3rem 0;
+            border-radius: 48px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
+        }
+        .map-section:hover {
+            border-color: #f97316;
+            box-shadow: 0 10px 30px rgba(249,115,22,0.2);
+        }
+        .map-section iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            color: #94a3b8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                border-radius: 40px;
+                padding: 16px;
+            }
+            .nav-links {
+                gap: 1.2rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+            .contact-details h2, .contact-form-box h2 {
+                font-size: 1.5rem;
+            }
+            .detail-item:hover {
+                transform: translateX(5px);
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            .btn-3d {
+                padding: 10px 24px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="animated-bg"></div>
+<div class="floating-shapes" id="shapes"></div>
+
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">
+            <h1>BINA <span style="color:#f97316;">ENTERPRISES</span></h1>
+            <p>Digital Service Hub</p>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="service.php">Services</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a href="contact.php" class="active">Contact</a></li>
+        </ul>
+        <a href="#contact-form" class="btn-3d">Enquire →</a>
+    </nav>
+
+    <div class="page-hero">
+        <h1>संपर्क <span style="color:#f97316;">करें</span></h1>
+        <p>किसी भी सेवा के लिए हमसे जुड़ें – हम 24x7 आपकी सहायता के लिए उपलब्ध हैं।</p>
+    </div>
+
+    <div class="contact-main-grid">
+        <!-- Contact Details with Clickable Links -->
+        <div class="contact-details">
+            <h2><i class="fas fa-address-card"></i> हमसे मिलें</h2>
+            <div class="detail-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <p>Nilmatha Road, Diptyganj Lucknow<br> Uttar Pradesh - 226002</p>
+            </div>
+            <div class="detail-item">
+                <i class="fas fa-phone-alt"></i>
+                <p><a href="tel:+917880385706" style="color:inherit; text-decoration:none;">+91 7880385706</a></p>
+            </div>
+            <div class="detail-item">
+                <i class="fab fa-whatsapp"></i>
+                <p><a href="https://wa.me/917880385706" target="_blank" style="color:inherit; text-decoration:none;">WhatsApp: +91 7880385706</a></p>
+            </div>
+            <div class="detail-item">
+                <i class="fas fa-envelope"></i>
+                <p><a href="mailto:service@binaenterprises.co.in" style="color:inherit; text-decoration:none;">service@binaenterprises.co.in</a></p>
+            </div>
+            <div class="detail-item">
+                <i class="fas fa-clock"></i>
+                <p>सोमवार – शनिवार: 10:00 AM – 7:00 PM<br>रविवार: बंद (केवल फोन / WhatsApp पर उपलब्ध)</p>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-box" id="contact-form">
+            <h2><i class="fas fa-paper-plane"></i> त्वरित संदेश भेजें</h2>
+            <?php if ($form_success): ?>
+                <div class="alert alert-success"><?php echo $msg; ?></div>
+            <?php elseif ($form_error): ?>
+                <div class="alert alert-error"><?php echo $msg; ?></div>
+            <?php endif; ?>
+            <form method="POST">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="आपका पूरा नाम *" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" name="mobile" placeholder="मोबाइल नंबर *" required>
+                </div>
+                <div class="form-group">
+                    <select name="service" required>
+                        <option value="">– सेवा चुनें –</option>
+                        <option>सरकारी जॉब फॉर्म</option>
+                        <option>UAN / PF Services</option>
+                        <option>Vehicle Insurance</option>
+                        <option>सरकारी योजनाएँ</option>
+                        <option>CSC Billing & Payment</option>
+                        <option>PAN Card / Aadhar Update</option>
+                        <option>Driving Licence / Passport</option>
+                        <option>IRCTC / Travel Booking</option>
+                        <option>अन्य ऑनलाइन फॉर्म</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="अपना संदेश या अतिरिक्त जानकारी लिखें..."></textarea>
+                </div>
+                <button type="submit" name="submit_contact" class="btn-3d" style="width:100%;">अभी संपर्क करें →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Google Maps -->
+    <div class="map-section">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.758124413356!2d80.94676231498207!3d26.875799183124684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfb2c43b5aa41%3A0xca832ac406fb046e!2sBina%20Enterprises!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+
+    <footer>
+        <p>© 2012 - <?php echo date('Y'); ?> Bina Enterprises | सभी ऑनलाइन फॉर्म सहायता | Designed with Premium 3D Interaction</p>
+    </footer>
+</div>
+
+<script>
+    // Generate floating shapes (glowing orbs)
+    const shapesContainer = document.getElementById('shapes');
+    for(let i = 0; i < 14; i++) {
+        let shape = document.createElement('div');
+        shape.classList.add('shape');
+        let size = Math.random() * 180 + 40;
+        shape.style.width = size + 'px';
+        shape.style.height = size + 'px';
+        shape.style.top = Math.random() * 100 + '%';
+        shape.style.left = Math.random() * 100 + '%';
+        shape.style.animationDelay = Math.random() * 12 + 's';
+        shape.style.animationDuration = Math.random() * 20 + 12 + 's';
+        shapesContainer.appendChild(shape);
+    }
+
+    // 3D Tilt Effect for detail items
+    const detailItems = document.querySelectorAll('.detail-item');
+    detailItems.forEach(item => {
+        item.addEventListener('mousemove', (e) => {
+            const rect = item.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 30;
+            const rotateY = (centerX - x) / 30;
+            item.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateX(5px)`;
+        });
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateX(0)';
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>हमारे बारे में | Bina Enterprises – 3D Online Form Filling & CSC Services</title>
+    <meta name="description" content="Bina Enterprises के बारे में जानें – 12+ साल का अनुभव, 10,000+ खुश ग्राहक, सभी ऑनलाइन फॉर्म सहायता।">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0a0f1e 0%, #030613 100%);
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f97316;
+            border-radius: 10px;
+        }
+
+        /* Animated Gradient Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(125deg, #0f172a 0%, #020617 40%, #000000 100%);
+            background-size: 200% 200%;
+            animation: bgWave 12s ease infinite;
+        }
+        @keyframes bgWave {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Shapes (Glowing Orbs) */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .shape {
+            position: absolute;
+            background: radial-gradient(circle, rgba(249,115,22,0.15), rgba(250,204,21,0.05));
+            backdrop-filter: blur(8px);
+            border-radius: 50%;
+            animation: float 25s infinite ease-in-out;
+            pointer-events: none;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.3; }
+            50% { transform: translate(40px, -40px) rotate(10deg) scale(1.2); opacity: 0.6; }
+            100% { transform: translate(-20px, 20px) rotate(-5deg) scale(0.9); opacity: 0.3; }
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Glassmorphic Navbar */
+        .navbar {
+            backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.65);
+            border-radius: 80px;
+            margin: 25px auto 35px;
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        .navbar:hover {
+            border-color: rgba(249,115,22,0.5);
+            box-shadow: 0 12px 40px rgba(249,115,22,0.2);
+        }
+        .logo h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #f97316);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .logo p {
+            font-size: 0.7rem;
+            color: #cbd5e6;
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #f1f5f9;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f97316, #facc15);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a:hover {
+            color: #f97316;
+        }
+
+        /* Premium 3D Buttons */
+        .btn-3d {
+            background: linear-gradient(95deg, #f97316, #ea580c);
+            border: none;
+            padding: 10px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 5px 15px rgba(249,115,22,0.4);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: inline-block;
+            text-decoration: none;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+        }
+        .btn-3d:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(249,115,22,0.6);
+            background: linear-gradient(95deg, #ff841f, #f96510);
+        }
+        .btn-3d:active {
+            transform: translateY(2px);
+        }
+
+        /* Page Hero */
+        .page-hero {
+            text-align: center;
+            padding: 40px 0 30px;
+        }
+        .page-hero h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, #f97316, #facc15);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+        .page-hero p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 1rem auto;
+        }
+
+        /* About Main Grid */
+        .about-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin: 3rem 0;
+            align-items: center;
+        }
+        .about-text {
+            flex: 1;
+        }
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(120deg, #fff, #facc15);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .about-text p {
+            margin-bottom: 1rem;
+            color: #cbd5e6;
+            line-height: 1.6;
+        }
+        .about-highlight {
+            color: #f97316;
+        }
+        .about-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 1.5rem;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.3s ease;
+        }
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: #f97316;
+            background: rgba(249,115,22,0.1);
+        }
+        .stat-box h3 {
+            font-size: 2.2rem;
+            color: #f97316;
+        }
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+        .about-image i {
+            font-size: 12rem;
+            color: #f97316;
+            filter: drop-shadow(0 0 20px rgba(249,115,22,0.4));
+            transition: transform 0.3s;
+        }
+        .about-image i:hover {
+            transform: scale(1.05);
+        }
+
+        /* Why Choose Us (Features) */
+        .features-section {
+            margin: 4rem 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+            background: linear-gradient(135deg, #fff, #facc15);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .section-title span {
+            color: #f97316;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: rgba(20, 30, 55, 0.55);
+            backdrop-filter: blur(18px);
+            border-radius: 40px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(249,115,22,0.1), transparent);
+            transition: left 0.6s;
+        }
+        .feature-card:hover::before {
+            left: 100%;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: #f97316;
+            box-shadow: 0 28px 40px -12px rgba(249,115,22,0.3);
+        }
+        .feature-card i {
+            font-size: 2.8rem;
+            color: #facc15;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+        .feature-card:hover i {
+            transform: scale(1.1);
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+        .feature-card p {
+            color: #cbd5e6;
+        }
+
+        /* Team Section */
+        .team-section {
+            margin: 4rem 0;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+        }
+        .team-card {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: 40px;
+            padding: 1.8rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            transform-style: preserve-3d;
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-color: #f97316;
+            background: rgba(249,115,22,0.1);
+        }
+        .team-card i {
+            font-size: 4rem;
+            color: #f97316;
+            filter: drop-shadow(0 0 10px rgba(249,115,22,0.3));
+        }
+        .team-card h3 {
+            margin: 0.8rem 0 0.3rem;
+        }
+
+        /* Call to Action */
+        .cta-container {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            color: #94a3b8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                border-radius: 40px;
+                padding: 16px;
+            }
+            .nav-links {
+                gap: 1.2rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+            .about-text h2 {
+                font-size: 1.6rem;
+            }
+            .stat-box h3 {
+                font-size: 1.5rem;
+            }
+            .about-image i {
+                font-size: 8rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            .btn-3d {
+                padding: 10px 24px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="animated-bg"></div>
+<div class="floating-shapes" id="shapes"></div>
+
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">
+            <h1>BINA <span style="color:#f97316;">ENTERPRISES</span></h1>
+            <p>Digital Service Hub</p>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="service.php">Services</a></li>
+            <li><a href="about.php" class="active">About</a></li>
+            <li><a href="contact.php">Contact</a></li>
+        </ul>
+        <a href="index.php#contact" class="btn-3d">Enquire →</a>
+    </nav>
+
+    <div class="page-hero">
+        <h1>हमारे <span style="color:#f97316;">बारे में</span></h1>
+        <p>जानिए Bina Enterprises की यात्रा, हमारा मिशन, और क्यों हम आपके विश्वसनीय डिजिटल साथी हैं।</p>
+    </div>
+
+    <div class="about-grid">
+        <div class="about-text">
+            <h2>हम कौन हैं? <span class="about-highlight">Bina Enterprises</span></h2>
+            <p>Bina Enterprises की स्थापना <strong>2012</strong> में हुई थी, जिसका उद्देश्य आम नागरिकों को ऑनलाइन फॉर्म भरने, सरकारी योजनाओं, बीमा, और CSC सेवाओं में सरल, तेज़ और सटीक सहायता प्रदान करना है। हम Bina Enterprises (Lucknow, U.P.) और आसपास के क्षेत्रों में सेवा दे रहे हैं।</p>
+            <p>हमारी टीम <strong>10,000+</strong> से अधिक फॉर्म सफलतापूर्वक भर चुकी है, जिसमें सरकारी जॉब फॉर्म, PF क्लेम, बीमा दावे, आधार सुधार, PAN कार्ड, और कई अन्य सेवाएँ शामिल हैं। हमारा लक्ष्य हर नागरिक तक डिजिटल सेवाओं को पहुँचाना है, चाहे वह गाँव हो या शहर।</p>
+            <div class="about-stats">
+                <div class="stat-box"><h3>12+</h3><p>Years Experience</p></div>
+                <div class="stat-box"><h3>10,000+</h3><p>Forms Filled</p></div>
+                <div class="stat-box"><h3>100%</h3><p>Client Satisfaction</p></div>
+            </div>
+        </div>
+        <div class="about-image">
+            <i class="fas fa-chart-line"></i>
+        </div>
+    </div>
+
+    <!-- Why Choose Us -->
+    <div class="features-section">
+        <h2 class="section-title">क्यों <span>चुनें हमें?</span></h2>
+        <div class="features-grid">
+            <div class="feature-card"><i class="fas fa-shield-alt"></i><h3>100% भरोसेमंद</h3><p>सभी फॉर्म सटीक और समय पर जमा किए जाते हैं। हम आपके डेटा की गोपनीयता सुनिश्चित करते हैं।</p></div>
+            <div class="feature-card"><i class="fas fa-rocket"></i><h3>तेज़ सेवा</h3><p>ज्यादातर फॉर्म उसी दिन सबमिट कर दिए जाते हैं। त्वरित सहायता के लिए WhatsApp support।</p></div>
+            <div class="feature-card"><i class="fas fa-rupee-sign"></i><h3>सस्ती दरें</h3><p>हमारी फीस बहुत ही उचित और पारदर्शी है। कोई छिपा हुआ शुल्क नहीं।</p></div>
+            <div class="feature-card"><i class="fas fa-headset"></i><h3>24x7 सहायता</h3><p>किसी भी समस्या पर आप हमें कॉल या WhatsApp कर सकते हैं। हम आपके साथ हैं।</p></div>
+        </div>
+    </div>
+
+    <!-- Our Mission & Vision -->
+    <div class="about-grid" style="margin-top:0;">
+        <div class="about-image">
+            <i class="fas fa-bullseye"></i>
+        </div>
+        <div class="about-text">
+            <h2>हमारा <span class="about-highlight">मिशन</span> और <span class="about-highlight">विजन</span></h2>
+            <p><strong>मिशन:</strong> “हर नागरिक तक डिजिटल सेवाओं की पहुँच सुनिश्चित करना, विशेषकर उन लोगों के लिए जो ऑनलाइन प्रक्रियाओं से अनजान हैं।”</p>
+            <p><strong>विजन:</strong> “सबसे भरोसेमंद CSC और ऑनलाइन फॉर्म सेवा केंद्र बनना, जहाँ हर व्यक्ति को गुणवत्तापूर्ण और सस्ती डिजिटल सहायता मिले।”</p>
+            <p>हम स्थानीय समुदाय को सशक्त बनाने और सरकारी योजनाओं का लाभ दिलाने के लिए प्रतिबद्ध हैं।</p>
+        </div>
+    </div>
+
+    <!-- Team Section (Optional but adds trust) -->
+    <div class="team-section">
+        <h2 class="section-title">हमारी <span>टीम</span></h2>
+        <div class="team-grid">
+            <div class="team-card"><i class="fas fa-user-tie"></i><h3>Bina Bisht</h3><p>Founder & Director</p><small>12+ years in digital services</small></div>
+            <div class="team-card"><i class="fas fa-user-check"></i><h3>Dhiraj Bisht</h3><p>Operations Head</p><small>Expert in CSC & Govt schemes</small></div>
+            <div class="team-card"><i class="fas fa-user-friends"></i><h3>Bina Bisht</h3><p>Senior Consultant</p><small>PF & Insurance specialist</small></div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="cta-container">
+        <a href="index.php#contact" class="btn-3d" style="padding: 14px 40px; font-size: 1.1rem;">→ आज ही सेवा लें ←</a>
+    </div>
+
+    <footer>
+        <p>© 2012 - <?php echo date('Y'); ?> Bina Enterprises | सभी ऑनलाइन फॉर्म सहायता | Designed with Premium 3D Interaction</p>
+    </footer>
+</div>
+
+<script>
+    // Generate floating shapes (glowing orbs)
+    const shapesContainer = document.getElementById('shapes');
+    for(let i = 0; i < 14; i++) {
+        let shape = document.createElement('div');
+        shape.classList.add('shape');
+        let size = Math.random() * 180 + 40;
+        shape.style.width = size + 'px';
+        shape.style.height = size + 'px';
+        shape.style.top = Math.random() * 100 + '%';
+        shape.style.left = Math.random() * 100 + '%';
+        shape.style.animationDelay = Math.random() * 12 + 's';
+        shape.style.animationDuration = Math.random() * 20 + 12 + 's';
+        shapesContainer.appendChild(shape);
+    }
+
+    // 3D Tilt Effect for Feature Cards and Team Cards
+    const tiltElements = document.querySelectorAll('.feature-card, .team-card, .stat-box');
+    tiltElements.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            el.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        });
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        });
+    });
+</script>
+</body>
+</html>
