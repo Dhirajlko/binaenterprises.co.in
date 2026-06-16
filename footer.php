@@ -1,0 +1,6 @@
+    <footer>
+        <p>© 2012 - <?php echo date('Y'); ?> Bina Enterprises | सभी ऑनलाइन फॉर्म सहायता | Designed with Premium 3D Interaction</p>
+    </footer>
+</div> <!-- .container -->
+</body>
+</html>
