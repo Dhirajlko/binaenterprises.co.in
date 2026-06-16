@@ -1,8 +1,14 @@
 <?php
-// Form handling (exactly as in your original – nothing changed)
+// Form handling
 $form_success = false;
 $form_error = false;
 $msg = '';
+
+// Fields ko pehle hi khali initialize kar dete hain
+$name = '';
+$mobile = '';
+$service = '';
+$details = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_form'])) {
     $name = trim($_POST['name'] ?? '');
@@ -27,18 +33,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_form'])) {
         if (mail($to, $subject, $message, $headers)) {
             $form_success = true;
             $msg = '✅ धन्यवाद! आपका फॉर्म सफलतापूर्वक भेज दिया गया। हम 24 घंटे में संपर्क करेंगे।';
+            // Success hone par fields khali kar dete hain
+            $name = $mobile = $service = $details = '';
         } else {
             $form_error = true;
             $msg = '❌ ईमेल भेजने में तकनीकी त्रुटि। कृपया बाद में प्रयास करें या मोबाइल से संपर्क करें।';
         }
-        $_POST = [];
     }
 }
 
-include 'includes/header.php';
+include 'header.php';
 ?>
 
-    <!-- Hero 3D Section -->
     <section id="home" class="hero">
         <div class="hero-content">
             <h2>सभी ऑनलाइन <span class="gradient-text">फॉर्म भरने</span> की सुविधा</h2>
@@ -54,7 +60,6 @@ include 'includes/header.php';
         </div>
     </section>
 
-    <!-- Services Grid -->
     <h2 class="section-title">हमारी <span style="color:#f97316;">सेवाएँ</span> | Experience</h2>
     <div class="services-grid" id="services">
         <div class="tilt-card"><i class="fas fa-briefcase"></i><h3>सरकारी जॉब फॉर्म</h3><p>SSC, BANK, RAILWAY, POLICE</p></div>
@@ -65,7 +70,6 @@ include 'includes/header.php';
         <div class="tilt-card"><i class="fas fa-edit"></i><h3>ऑनलाइन फॉर्म</h3><p>Pan, Aadhar, Passport, DL</p></div>
     </div>
 
-    <!-- About Section -->
     <div class="about">
         <div class="about-flex">
             <div style="flex:1">
@@ -83,7 +87,6 @@ include 'includes/header.php';
         </div>
     </div>
 
-    <!-- Contact Section -->
     <div id="contact" class="contact-premium">
         <div class="contact-grid">
             <div class="contact-cards">
@@ -125,47 +128,48 @@ include 'includes/header.php';
             </div>
             
             <div class="contact-form-wrapper">
-                <?php if ($form_success): ?>
-                    <div class="alert alert-success"><?php echo $msg; ?></div>
-                <?php elseif ($form_error): ?>
-                    <div class="alert alert-error"><?php echo $msg; ?></div>
+                <?php if ($form_success && !empty($msg)): ?>
+                    <div class="alert alert-success" style="color: green; font-weight: bold; margin-bottom: 15px;"><?php echo $msg; ?></div>
+                <?php elseif ($form_error && !empty($msg)): ?>
+                    <div class="alert alert-error" style="color: red; font-weight: bold; margin-bottom: 15px;"><?php echo $msg; ?></div>
                 <?php endif; ?>
-                <form method="POST">
+                
+                <form method="POST" action="#contact">
                     <div class="form-group">
-                        <input type="text" name="name" placeholder="आपका नाम *" required>
+                        <input type="text" name="name" placeholder="आपका नाम *" value="<?php echo htmlspecialchars($name); ?>" required>
                     </div>
                     <div class="form-group">
-                        <input type="tel" name="mobile" placeholder="मोबाइल नंबर *" required>
+                        <input type="tel" name="mobile" placeholder="मोबाइल नंबर *" value="<?php echo htmlspecialchars($mobile); ?>" required>
                     </div>
                     <div class="form-group">
                         <select name="service" required>
                             <option value="">– सेवा चुनें –</option>
-                            <option>(ITR, BOOK-KEEPING ,GST) SUPPORT</option>
-                            <option>सरकारी जॉब फॉर्म (SSC, BANK, RAILWAY, POLICE, TEACHER)</option>
-                            <option>UAN / PF Services (Withdrawal, KYC, Passbook, Transfer)</option>
-                            <option>Vehicle Insurance (Car, Bike, Commercial – New/Renewal)</option>
-                            <option>सरकारी योजनाएँ (PM Kisan, Ayushman, Ration Card, Scholarship)</option>
-                            <option>CSC Billing & Payment (Electricity, Water, Gas, Recharge)</option>
-                            <option>PAN Card Application / Correction</option>
-                            <option>Aadhar Card Update (Address, Mobile, Bio-metric)</option>
-                            <option>Driving Licence (Learning & Permanent)</option>
-                            <option>Voter ID (New, Correction, Transfer)</option>
-                            <option>Passport Application & Appointment</option>
-                            <option>IRCTC / Train Ticket Booking</option>
-                            <option>Travel Booking (Flight, Bus, Hotel)</option>
-                            <option>PF / EPFO Claim Assistance</option>
-                            <option>Ayushman Card (New & Update)</option>
-                            <option>PM Kisan Samman Nidhi Registration</option>
-                            <option>Ration Card (New, Addition, Deletion)</option>
-                            <option>Scholarship Forms (Pre-Matric, Post-Matric)</option>
-                            <option>Gas Connection (New, Subsidy Transfer)</option>
-                            <option>Internet / Mobile Recharge & Bill Payment</option>
-                            <option>राशन कार्ड / आधार सीडिंग</option>
-                            <option>अन्य ऑनलाइन फॉर्म (जो सूची में न हो)</option>
+                            <option <?php echo ($service == '(ITR, BOOK-KEEPING ,GST) SUPPORT') ? 'selected' : ''; ?>>(ITR, BOOK-KEEPING ,GST) SUPPORT</option>
+                            <option <?php echo ($service == 'सरकारी जॉब फॉर्म (SSC, BANK, RAILWAY, POLICE, TEACHER)') ? 'selected' : ''; ?>>सरकारी जॉब फॉर्म (SSC, BANK, RAILWAY, POLICE, TEACHER)</option>
+                            <option <?php echo ($service == 'UAN / PF Services (Withdrawal, KYC, Passbook, Transfer)') ? 'selected' : ''; ?>>UAN / PF Services (Withdrawal, KYC, Passbook, Transfer)</option>
+                            <option <?php echo ($service == 'Vehicle Insurance (Car, Bike, Commercial – New/Renewal)') ? 'selected' : ''; ?>>Vehicle Insurance (Car, Bike, Commercial – New/Renewal)</option>
+                            <option <?php echo ($service == 'सरकारी योजनाएँ (PM Kisan, Ayushman, Ration Card, Scholarship)') ? 'selected' : ''; ?>>सरकारी योजनाएँ (PM Kisan, Ayushman, Ration Card, Scholarship)</option>
+                            <option <?php echo ($service == 'CSC Billing & Payment (Electricity, Water, Gas, Recharge)') ? 'selected' : ''; ?>>CSC Billing & Payment (Electricity, Water, Gas, Recharge)</option>
+                            <option <?php echo ($service == 'PAN Card Application / Correction') ? 'selected' : ''; ?>>PAN Card Application / Correction</option>
+                            <option <?php echo ($service == 'Aadhar Card Update (Address, Mobile, Bio-metric)') ? 'selected' : ''; ?>>Aadhar Card Update (Address, Mobile, Bio-metric)</option>
+                            <option <?php echo ($service == 'Driving Licence (Learning & Permanent)') ? 'selected' : ''; ?>>Driving Licence (Learning & Permanent)</option>
+                            <option <?php echo ($service == 'Voter ID (New, Correction, Transfer)') ? 'selected' : ''; ?>>Voter ID (New, Correction, Transfer)</option>
+                            <option <?php echo ($service == 'Passport Application & Appointment') ? 'selected' : ''; ?>>Passport Application & Appointment</option>
+                            <option <?php echo ($service == 'IRCTC / Train Ticket Booking') ? 'selected' : ''; ?>>IRCTC / Train Ticket Booking</option>
+                            <option <?php echo ($service == 'Travel Booking (Flight, Bus, Hotel)') ? 'selected' : ''; ?>>Travel Booking (Flight, Bus, Hotel)</option>
+                            <option <?php echo ($service == 'PF / EPFO Claim Assistance') ? 'selected' : ''; ?>>PF / EPFO Claim Assistance</option>
+                            <option <?php echo ($service == 'Ayushman Card (New & Update)') ? 'selected' : ''; ?>>Ayushman Card (New & Update)</option>
+                            <option <?php echo ($service == 'PM Kisan Samman Nidhi Registration') ? 'selected' : ''; ?>>PM Kisan Samman Nidhi Registration</option>
+                            <option <?php echo ($service == 'Ration Card (New, Addition, Deletion)') ? 'selected' : ''; ?>>Ration Card (New, Addition, Deletion)</option>
+                            <option <?php echo ($service == 'Scholarship Forms (Pre-Matric, Post-Matric)') ? 'selected' : ''; ?>>Scholarship Forms (Pre-Matric, Post-Matric)</option>
+                            <option <?php echo ($service == 'Gas Connection (New, Subsidy Transfer)') ? 'selected' : ''; ?>>Gas Connection (New, Subsidy Transfer)</option>
+                            <option <?php echo ($service == 'Internet / Mobile Recharge & Bill Payment') ? 'selected' : ''; ?>>Internet / Mobile Recharge & Bill Payment</option>
+                            <option <?php echo ($service == 'राशन कार्ड / आधार祕डिंग') ? 'selected' : ''; ?>>राशन कार्ड / आधार सीडिंग</option>
+                            <option <?php echo ($service == 'अन्य ऑनलाइन फॉर्म (जो सूची में न हो)') ? 'selected' : ''; ?>>अन्य ऑनलाइन फॉर्म (जो सूची में न हो)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <textarea name="details" placeholder="अतिरिक्त जानकारी (वैकल्पिक)"></textarea>
+                        <textarea name="details" placeholder="अतिरिक्त जानकारी (वैकल्पिक)"><?php echo htmlspecialchars($details); ?></textarea>
                     </div>
                     <button type="submit" name="submit_form" class="btn-3d" style="width:100%;">अभी जमा करें →</button>
                 </form>
@@ -173,4 +177,4 @@ include 'includes/header.php';
         </div>
     </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'footer.php'; ?>
